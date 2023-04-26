@@ -1,0 +1,40 @@
+ARG NODE_VERSION=18.12.1
+ARG STAGING_DIR=/app/board
+
+# --- Build Stage 0 --- 
+# This stage is responsible for building the project
+#
+FROM node:${NODE_VERSION} as builder
+
+# NOTE: An ARG instruction goes out of scope at the end of the build stage where it was defined.
+# To use an ARG in multiple stages, each stage must include the ARG instruction.
+ARG STAGING_DIR
+WORKDIR ${STAGING_DIR}
+
+# Install app dependencies
+COPY package.json yarn.lock ./
+COPY prisma ./prisma
+
+RUN yarn install --frozen-lockfile
+
+COPY . .
+
+RUN yarn build
+
+# --- Build Stage 1 --- 
+# This build pulls the cached dependencies and cached build and runs the project
+#
+FROM node:${NODE_VERSION} AS prod
+
+ENV NODE_ENV production
+
+ARG STAGING_DIR
+WORKDIR ${STAGING_DIR}
+
+COPY --from=builder ${STAGING_DIR}/node_modules ./node_modules
+COPY --from=builder ${STAGING_DIR}/package*.json ${STAGING_DIR}/yarn.lock ./
+COPY --from=builder ${STAGING_DIR}/dist ./dist
+
+EXPOSE 8001
+
+CMD [ "node", "dist/main.js" ]

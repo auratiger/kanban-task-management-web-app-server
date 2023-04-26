@@ -1,0 +1,45 @@
+services:
+   board-db:
+      extends:
+         file: common.yml
+         service: base-postgres
+      hostname: board-db
+      container_name: board-db
+      ports:
+         - '5432:5432'
+      env_file:
+         - .env.prod
+      volumes:
+         - ./docker-data/db/board:/var/lib/postgresql/data
+      networks:
+         - board-db-net
+         - pgadmin-net
+
+   prisma-migrate:
+      build:
+         context: ./prisma
+         dockerfile: Dockerfile
+      container_name: prisma-migrate
+      env_file:
+         - .env.prod
+      depends_on:
+         board-db:
+            condition: service_healthy
+      networks:
+         - board-db-net
+
+   board-service:
+      build:
+         dockerfile: Dockerfile.prod
+         context: .
+      container_name: board-service
+      ports:
+         - '8001:8001'
+      # restart: on-failure
+      depends_on:
+         board-db:
+            condition: service_healthy
+      env_file:
+         - .env.prod
+      networks:
+         - board-db-net

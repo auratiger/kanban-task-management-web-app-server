@@ -1,0 +1,26 @@
+# https://docs.docker.com/compose/reference/
+
+services:
+   pgadmin:
+      image: dpage/pgadmin4:6.2
+      container_name: pgadmin4_container
+      restart: always
+      environment:
+         PGADMIN_DEFAULT_EMAIL: admin@admin.com
+         PGADMIN_DEFAULT_PASSWORD: root
+      ports:
+         - '5050:80'
+      depends_on:
+         board-db:
+            condition: service_healthy
+      networks:
+         - pgadmin-net
+
+# ---------- Networks ----------
+networks:
+   pgadmin-net:
+      driver: bridge
+
+   # -- Service Networks
+   board-db-net:
+      driver: bridge

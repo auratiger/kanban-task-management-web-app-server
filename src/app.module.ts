@@ -1,0 +1,43 @@
+import { Logger, Module } from '@nestjs/common';
+import { ConfigModule } from '@nestjs/config';
+import { PrismaModule } from 'nestjs-prisma';
+import { loggingMiddleware } from './common/middleware/logging.middleware';
+import { AppController } from './app/app.controller';
+import { AppService } from './app/app.service';
+import { GraphQLModule } from '@nestjs/graphql';
+import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
+import config from './common/config/config';
+import { GqlConfigService } from './gql-config.service';
+import { BoardModule } from './modules/boards/board.module';
+import { HealthModule } from './modules/health/health.module';
+import { ColumnModule } from './modules/column/column.module';
+import { TaskModule } from './modules/task/task.module';
+import { SubtaskModule } from './modules/subtask/subtask.module';
+
+@Module({
+   imports: [
+      ConfigModule.forRoot({
+         envFilePath: ['.env.dev', '.env', '.env.sample'],
+         isGlobal: true,
+         load: [config],
+      }),
+      PrismaModule.forRoot({
+         isGlobal: true,
+         prismaServiceOptions: {
+            middlewares: [loggingMiddleware(new Logger('PrismaMiddleware'))], // configure your prisma middleware
+         },
+      }),
+      GraphQLModule.forRootAsync<ApolloDriverConfig>({
+         driver: ApolloDriver,
+         useClass: GqlConfigService,
+      }),
+      BoardModule,
+      ColumnModule,
+      TaskModule,
+      SubtaskModule,
+      HealthModule,
+   ],
+   controllers: [AppController],
+   providers: [AppService],
+})
+export class AppModule {}
