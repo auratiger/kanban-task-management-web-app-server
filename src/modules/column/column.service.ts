@@ -6,14 +6,10 @@ import { Column } from './column.model';
 export class ColumnService {
    constructor(private prisma: PrismaService) {}
 
-   async findAll(): Promise<Column[]> {
-      return this.prisma.column.findMany();
-   }
-
-   async findById(boardId: string): Promise<Column | undefined> {
+   async findById(columnId: string): Promise<Column | undefined> {
       return this.prisma.column.findUnique({
          where: {
-            id: boardId,
+            id: columnId,
          },
       });
    }

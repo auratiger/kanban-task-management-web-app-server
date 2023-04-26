@@ -1,6 +1,6 @@
 import { Resolver, Query, Mutation, Args } from '@nestjs/graphql';
-import { Column } from './column.model';
 import { ColumnService } from './column.service';
+import { Column } from './column.model';
 
 @Resolver(() => Column)
 export class ColumnResolver {
@@ -8,6 +8,6 @@ export class ColumnResolver {
 
    @Query(() => [Column])
    async boards() {
-      return this.boardService.findAll();
+      return this.boardService.findById('');
    }
 }

@@ -6,12 +6,9 @@ import { Board } from './board.model';
 export class BoardService {
    constructor(private prisma: PrismaService) {}
 
-   async findAll(): Promise<Board[]> {
-      return this.prisma.board.findMany();
-   }
-
    async findById(boardId: string): Promise<Board | undefined> {
       return this.prisma.board.findUnique({
+         include: { columns: true },
          where: {
             id: boardId,
          },

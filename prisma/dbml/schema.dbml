@@ -17,33 +17,6 @@ Table Column {
   name String [unique, not null]
   board Board [not null]
   boardId String [unique, not null]
-  tasks Task [not null]
-}
-
-Table Task {
-  id String [pk]
-  createdAt DateTime [default: `now()`, not null]
-  updatedAt DateTime [not null]
-  title String [unique, not null]
-  description String
-  status String [not null, default: 'NOT_STARTED']
-  subtasks Subtask [not null]
-  column Column
-  columnId String
-}
-
-Table Subtask {
-  id String [pk]
-  createdAt DateTime [default: `now()`, not null]
-  updatedAt DateTime [not null]
-  title String [unique, not null]
-  isComplete Boolean [not null, default: false]
-  task Task
-  taskId String
 }
 
 Ref: Column.boardId > Board.id
-
-Ref: Task.columnId > Column.id
-
-Ref: Subtask.taskId > Task.id

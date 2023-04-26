@@ -8,6 +8,6 @@ export class BoardResolver {
 
    @Query(() => [Board])
    async boards() {
-      return this.boardService.findAll();
+      return this.boardService.findById('');
    }
 }

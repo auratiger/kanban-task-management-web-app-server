@@ -8,11 +8,9 @@ import { GraphQLModule } from '@nestjs/graphql';
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import config from './common/config/config';
 import { GqlConfigService } from './gql-config.service';
-import { BoardModule } from './modules/boards/board.module';
 import { HealthModule } from './modules/health/health.module';
+import { BoardModule } from './modules/board/board.module';
 import { ColumnModule } from './modules/column/column.module';
-import { TaskModule } from './modules/task/task.module';
-import { SubtaskModule } from './modules/subtask/subtask.module';
 
 @Module({
    imports: [
@@ -33,8 +31,6 @@ import { SubtaskModule } from './modules/subtask/subtask.module';
       }),
       BoardModule,
       ColumnModule,
-      TaskModule,
-      SubtaskModule,
       HealthModule,
    ],
    controllers: [AppController],
