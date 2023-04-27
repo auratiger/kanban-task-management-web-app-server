@@ -12,6 +12,11 @@ services:
          - POSTGRES_USER=${POSTGRES_USER}
          - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
          - POSTGRES_DB=${POSTGRES_DB}
+      healthcheck:
+         test: ['CMD', 'pg_isready', '-q', '-d', 'database', '-U', 'postgres']
+         interval: 2s
+         timeout: 10s
+         retries: 10
       volumes:
          - ./docker-data/db/board:/var/lib/postgresql/data
          - ./init-user-db.sh:/docker-entrypoint-initdb.d/init-user-db.sh
@@ -25,7 +30,8 @@ services:
          - '5050:80'
       restart: always
       depends_on:
-         - board-db
+         board-db:
+            condition: service_healthy
 
    prisma-migrate:
       build:
@@ -35,17 +41,19 @@ services:
       env_file:
          - .env.prod
       depends_on:
-         - board-db
+         board-db:
+            condition: service_healthy
 
-   board-service:
-      build:
-         dockerfile: Dockerfile.prod
-         context: .
-      container_name: board-service
-      ports:
-         - '8001:8001'
-      # restart: on-failure
-      depends_on:
-         - board-db
-      env_file:
-         - .env.prod
+   # board-service:
+   #    build:
+   #       dockerfile: Dockerfile.prod
+   #       context: .
+   #    container_name: board-service
+   #    ports:
+   #       - '8001:8001'
+   #    # restart: on-failure
+   #    depends_on:
+   #       board-db:
+   #          condition: service_healthy
+   #    env_file:
+   #       - .env.prod

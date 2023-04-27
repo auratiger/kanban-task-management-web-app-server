@@ -20,7 +20,6 @@ export class ColumnService {
       return await this.prisma.column.findUnique({
          ...select,
          where: args,
-         rejectOnNotFound: true,
       });
    }
 }

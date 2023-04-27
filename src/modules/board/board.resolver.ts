@@ -9,7 +9,7 @@ export class BoardResolver {
    constructor(private boardService: BoardService) {}
 
    @Query(() => Board)
-   public async post(
+   public async board(
       @Args('where') args: BoardWhereUniqueInput,
       @Info() info?: GraphQLResolveInfo,
    ) {

@@ -12,6 +12,8 @@ import { HealthModule } from './modules/health/health.module';
 import { BoardModule } from './modules/board/board.module';
 import { ColumnModule } from './modules/column/column.module';
 import { PrismaModuleTest } from './prisma.module';
+import { TaskModule } from './modules/task/task.module';
+import { SubtaskModule } from './modules/subtask/subtask.module';
 
 @Module({
    imports: [
@@ -32,6 +34,8 @@ import { PrismaModuleTest } from './prisma.module';
       }),
       BoardModule,
       ColumnModule,
+      TaskModule,
+      SubtaskModule,
       HealthModule,
       PrismaModuleTest,
    ],

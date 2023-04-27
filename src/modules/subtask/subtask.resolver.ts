@@ -9,7 +9,7 @@ export class SubtaskResolver {
    constructor(private subtaskService: SubtaskService) {}
 
    @Query(() => Subtask)
-   public async post(
+   public async subtask(
       @Args('where') args: SubtaskWhereUniqueInput,
       @Info() info?: GraphQLResolveInfo,
    ) {

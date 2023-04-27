@@ -17,7 +17,6 @@ export class TaskService {
       return await this.prisma.task.findUnique({
          ...select,
          where: args,
-         rejectOnNotFound: true,
       });
    }
 }

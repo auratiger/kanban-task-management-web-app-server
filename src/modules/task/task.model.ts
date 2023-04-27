@@ -15,6 +15,6 @@ export class Task extends BaseModel {
    @Field(() => String, { defaultValue: 'NOT STARTED' })
    status?: string;
 
-   @Field(() => [Column], { nullable: false })
+   @Field(() => [Subtask], { nullable: false })
    subtasks: Array<Subtask>;
 }

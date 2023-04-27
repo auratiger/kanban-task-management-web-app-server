@@ -18,7 +18,7 @@ model Board {
    id        String   @id @default(cuid())
    createdAt DateTime @default(now())
    updatedAt DateTime @updatedAt
-   name      String   @unique
+   name      String
    columns   Column[]
 }
 
@@ -26,9 +26,9 @@ model Column {
    id        String   @id @default(cuid())
    createdAt DateTime @default(now())
    updatedAt DateTime @updatedAt
-   name      String   @unique
+   name      String
    board     Board    @relation(fields: [boardId], references: [id])
-   boardId   String   @unique
+   boardId   String
    tasks     Task[]
 }
 
@@ -36,7 +36,7 @@ model Task {
    id          String    @id @default(cuid())
    createdAt   DateTime  @default(now())
    updatedAt   DateTime  @updatedAt
-   title       String    @unique
+   title       String
    description String?
    status      String    @default("NOT_STARTED")
    subtasks    Subtask[]
@@ -48,7 +48,7 @@ model Subtask {
    id         String   @id @default(cuid())
    createdAt  DateTime @default(now())
    updatedAt  DateTime @updatedAt
-   title      String   @unique
+   title      String
    isComplete Boolean  @default(false)
    task       Task?    @relation(fields: [taskId], references: [id])
    taskId     String?

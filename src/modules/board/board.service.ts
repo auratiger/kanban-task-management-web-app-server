@@ -20,7 +20,6 @@ export class BoardService {
       return await this.prisma.board.findUnique({
          ...select,
          where: args,
-         rejectOnNotFound: true,
       });
    }
 }

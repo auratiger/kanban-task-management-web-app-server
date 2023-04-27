@@ -20,7 +20,6 @@ export class SubtaskService {
       return await this.prisma.subtask.findUnique({
          ...select,
          where: args,
-         rejectOnNotFound: true,
       });
    }
 }

@@ -9,7 +9,7 @@ export class TaskResolver {
    constructor(private taskService: TaskService) {}
 
    @Query(() => Task)
-   public async post(
+   public async task(
       @Args('where') args: TaskWhereUniqueInput,
       @Info() info?: GraphQLResolveInfo,
    ) {

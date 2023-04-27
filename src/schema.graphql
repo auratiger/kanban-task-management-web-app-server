@@ -14,6 +14,11 @@ type Board {
   updatedAt: DateTime!
 }
 
+input BoardWhereUniqueInput {
+  id: String
+  name: String
+}
+
 type Column {
   board: Board!
 
@@ -38,7 +43,25 @@ A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date
 scalar DateTime
 
 type Query {
-  post(where: ColumnWhereUniqueInput!): Column!
+  board(where: BoardWhereUniqueInput!): Board!
+  column(where: ColumnWhereUniqueInput!): Column!
+  subtask(where: SubtaskWhereUniqueInput!): Subtask!
+  task(where: TaskWhereUniqueInput!): Task!
+}
+
+type Subtask {
+  """Identifies the date and time when the object was created."""
+  createdAt: DateTime!
+  id: ID!
+  isComplete: Boolean!
+  title: String!
+
+  """Identifies the date and time when the object was last updated."""
+  updatedAt: DateTime!
+}
+
+input SubtaskWhereUniqueInput {
+  id: String
 }
 
 type Task {
@@ -47,9 +70,14 @@ type Task {
   description: String
   id: ID!
   status: String
-  subtasks: [Column!]!
+  subtasks: [Subtask!]!
   title: String!
 
   """Identifies the date and time when the object was last updated."""
   updatedAt: DateTime!
+}
+
+input TaskWhereUniqueInput {
+  id: String
+  title: String
 }

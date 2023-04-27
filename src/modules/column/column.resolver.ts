@@ -9,7 +9,7 @@ export class ColumnResolver {
    constructor(private columnService: ColumnService) {}
 
    @Query(() => Column)
-   public async post(
+   public async column(
       @Args('where') args: ColumnWhereUniqueInput,
       @Info() info?: GraphQLResolveInfo,
    ) {
