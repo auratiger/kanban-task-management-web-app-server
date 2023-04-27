@@ -4,6 +4,7 @@ import { Task } from './task.model';
 import { PrismaSelectService } from 'src/prisma-select.service';
 import { GraphQLResolveInfo } from 'graphql';
 import { TaskWhereUniqueInput } from './dto/task-where-unique.input';
+import { FindManyArgs } from 'src/common/input/find-many.input';
 
 @Injectable()
 export class TaskService {
@@ -17,6 +18,15 @@ export class TaskService {
       return await this.prisma.task.findUnique({
          ...select,
          where: args,
+      });
+   }
+
+   public async getTasks(args: FindManyArgs, info?: GraphQLResolveInfo) {
+      // Prisma Select to solve N+1 graphql problem
+      const select = this.prismaSelectService.getValue(info);
+      return await this.prisma.task.findMany({
+         ...args,
+         ...select,
       });
    }
 }

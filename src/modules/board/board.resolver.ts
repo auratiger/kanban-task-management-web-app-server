@@ -3,6 +3,7 @@ import { BoardService } from './board.service';
 import { Board } from './board.model';
 import { GraphQLResolveInfo } from 'graphql';
 import { BoardWhereUniqueInput } from './dto/board-where-unique.input';
+import { FindManyArgs } from 'src/common/input/find-many.input';
 
 @Resolver(() => Board)
 export class BoardResolver {
@@ -14,5 +15,13 @@ export class BoardResolver {
       @Info() info?: GraphQLResolveInfo,
    ) {
       return await this.boardService.getBoard(args, info);
+   }
+
+   @Query(() => [Board])
+   public async boards(
+      @Args() args: FindManyArgs,
+      @Info() info?: GraphQLResolveInfo,
+   ) {
+      return await this.boardService.getBoards(args, info);
    }
 }
