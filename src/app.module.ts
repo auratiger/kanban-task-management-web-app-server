@@ -11,6 +11,7 @@ import { GqlConfigService } from './gql-config.service';
 import { HealthModule } from './modules/health/health.module';
 import { BoardModule } from './modules/board/board.module';
 import { ColumnModule } from './modules/column/column.module';
+import { PrismaModuleTest } from './prisma.module';
 
 @Module({
    imports: [
@@ -32,6 +33,7 @@ import { ColumnModule } from './modules/column/column.module';
       BoardModule,
       ColumnModule,
       HealthModule,
+      PrismaModuleTest,
    ],
    controllers: [AppController],
    providers: [AppService],

@@ -7,61 +7,47 @@ async function main() {
 
    console.log('Seeding...');
 
-   // const board1 = await prisma.board.create({
-   //    include: {
-   //       columns: {
-   //          include: {
-   //             tasks: {
-   //                include: {
-   //                   subtasks: true,
-   //                },
-   //             },
-   //          },
-   //       },
-   //    },
-   //    data: {
-   //       name: 'Platform Launch',
-   //       columns: {
-   //          create: [
-   //             {
-   //                name: 'TODO',
-   //                tasks: {
-   //                   create: [
-   //                      {
-   //                         title: 'Build UI for onboarding flow',
-   //                         description: '',
-   //                         status: 'TODO',
-   //                         subtasks: {
-   //                            create: [
-   //                               {
-   //                                  title: 'Sign up page',
-   //                                  isComplete: true,
-   //                               },
-   //                               {
-   //                                  title: 'Sign in page',
-   //                               },
-   //                               {
-   //                                  title: 'Welcome page',
-   //                               },
-   //                            ],
-   //                         },
-   //                      },
-   //                   ],
-   //                },
-   //             },
-   //          ],
-   //       },
-   //    },
-   // });
-   //
-
    const board1 = await prisma.board.create({
+      include: {
+         columns: {
+            include: {
+               tasks: {
+                  include: {
+                     subtasks: true,
+                  },
+               },
+            },
+         },
+      },
       data: {
          name: 'Platform Launch',
          columns: {
             create: [
                {
                   name: 'TODO',
+                  tasks: {
+                     create: [
+                        {
+                           title: 'Build UI for onboarding flow',
+                           description: '',
+                           status: 'TODO',
+                           subtasks: {
+                              create: [
+                                 {
+                                    title: 'Sign up page',
+                                    isComplete: true,
+                                 },
+                                 {
+                                    title: 'Sign in page',
+                                 },
+                                 {
+                                    title: 'Welcome page',
+                                 },
+                              ],
+                           },
+                        },
+                     ],
+                  },
                },
             ],
          },

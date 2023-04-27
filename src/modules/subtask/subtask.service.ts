@@ -1,23 +1,23 @@
 import { PrismaService } from 'nestjs-prisma';
 import { Injectable } from '@nestjs/common';
-import { Column } from './column.model';
-import { ColumnWhereUniqueInput } from './dto/column-where-unique.input';
-import { GraphQLResolveInfo } from 'graphql';
+import { Subtask } from './subtask.model';
 import { PrismaSelectService } from 'src/prisma-select.service';
+import { GraphQLResolveInfo } from 'graphql';
+import { SubtaskWhereUniqueInput } from './dto/subtask-where-unique.input';
 
 @Injectable()
-export class ColumnService {
+export class SubtaskService {
    constructor(
       private prisma: PrismaService,
       private prismaSelectService: PrismaSelectService,
    ) {}
 
-   public async getColumn(
-      args: ColumnWhereUniqueInput,
+   public async getSubtask(
+      args: SubtaskWhereUniqueInput,
       info?: GraphQLResolveInfo,
    ) {
       const select = this.prismaSelectService.getValue(info);
-      return await this.prisma.column.findUnique({
+      return await this.prisma.subtask.findUnique({
          ...select,
          where: args,
          rejectOnNotFound: true,
