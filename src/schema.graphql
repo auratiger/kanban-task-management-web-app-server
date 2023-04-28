@@ -46,6 +46,15 @@ input ColumnWhereUniqueInput {
   name: String
 }
 
+input CreateBoardInput {
+  columns: [CreateColumnInput!]
+  name: String!
+}
+
+input CreateColumnInput {
+  name: String!
+}
+
 """
 A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
 """
@@ -60,6 +69,12 @@ input DateTimeFilter {
   lte: DateTime
   not: DateTimeFilter
   notIn: [DateTime!]
+}
+
+type Mutation {
+  createBoard(data: CreateBoardInput!): Board!
+  createColumn(data: CreateColumnInput!): Column!
+  createColumns(data: [CreateColumnInput!]!): [Column!]!
 }
 
 type Query {

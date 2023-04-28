@@ -4,6 +4,7 @@ import { Board } from './board.model';
 import { GraphQLResolveInfo } from 'graphql';
 import { BoardWhereUniqueInput } from './dto/board-where-unique.input';
 import { FindManyArgs } from 'src/common/input/find-many.input';
+import { CreateBoardInput } from './dto/create-board.input';
 
 @Resolver(() => Board)
 export class BoardResolver {
@@ -24,4 +25,23 @@ export class BoardResolver {
    ) {
       return await this.boardService.getBoards(args, info);
    }
+
+   /* Mutations */
+   @Mutation(() => Board)
+   public async createBoard(@Args('data') input: CreateBoardInput) {
+      return await this.boardService.craeteBoard(input);
+   }
+
+   // @Mutation(() => Board)
+   // public async updatePost(
+   //    @Args('where') where: PostWhereUniqueInput,
+   //    @Args('data') data: UpdatePostInput,
+   // ) {
+   //    return await this.boardService.updatePost(where, data);
+   // }
+
+   // @Mutation(() => Board)
+   // public async deletePost(@Args('where') where: PostWhereUniqueInput) {
+   //    return await this.boardService.deletePost(where);
+   // }
 }
