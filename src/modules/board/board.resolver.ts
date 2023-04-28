@@ -40,8 +40,8 @@ export class BoardResolver {
    //    return await this.boardService.updatePost(where, data);
    // }
 
-   // @Mutation(() => Board)
-   // public async deletePost(@Args('where') where: PostWhereUniqueInput) {
-   //    return await this.boardService.deletePost(where);
-   // }
+   @Mutation(() => Board)
+   public async deletePost(@Args('where') where: BoardWhereUniqueInput) {
+      return await this.boardService.deleteBoard(where);
+   }
 }

@@ -6,7 +6,7 @@ import { PrismaSelectService } from 'src/prisma-select.service';
 import { FindManyArgs } from 'src/common/input/find-many.input';
 import { CreateBoardInput } from './dto/create-board.input';
 import { ColumnService } from '../column/column.service';
-import { Column, Prisma } from '@prisma/client';
+import { Board, Column, Prisma } from '@prisma/client';
 
 @Injectable()
 export class BoardService {
@@ -62,6 +62,17 @@ export class BoardService {
          console.log(JSON.stringify(post));
 
          return post;
+      } catch (error) {
+         throw new HttpException(
+            error.message,
+            HttpStatus.INTERNAL_SERVER_ERROR,
+         );
+      }
+   }
+
+   public async deleteBoard(where: BoardWhereUniqueInput): Promise<Board> {
+      try {
+         return await this.prisma.board.delete({ where });
       } catch (error) {
          throw new HttpException(
             error.message,

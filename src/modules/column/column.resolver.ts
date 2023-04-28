@@ -51,9 +51,9 @@ export class ColumnResolver {
    //    return await this.columnService.updateColumn(where, data);
    // }
 
-   // /* istanbul ignore next */
-   // @Mutation(() => Column)
-   // public async deleteColumn(@Args('where') where: ColumnWhereUniqueInput) {
-   //    return await this.columnService.deleteColumn(where);
-   // }
+   /* istanbul ignore next */
+   @Mutation(() => Column)
+   public async deleteColumn(@Args('where') where: ColumnWhereUniqueInput) {
+      return await this.columnService.deleteColumn(where);
+   }
 }

@@ -69,4 +69,15 @@ export class ColumnService {
          );
       }
    }
+
+   public async deleteColumn(where: ColumnWhereUniqueInput): Promise<Column> {
+      try {
+         return await this.prisma.column.delete({ where });
+      } catch (error) {
+         throw new HttpException(
+            error.message,
+            HttpStatus.INTERNAL_SERVER_ERROR,
+         );
+      }
+   }
 }
