@@ -41,7 +41,9 @@ export class BoardResolver {
    // }
 
    @Mutation(() => Board)
-   public async deletePost(@Args('where') where: BoardWhereUniqueInput) {
+   public async deleteBoard(@Args('where') where: BoardWhereUniqueInput) {
+      console.log("what");
+      
       return await this.boardService.deleteBoard(where);
    }
 }

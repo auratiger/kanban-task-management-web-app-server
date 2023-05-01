@@ -1,7 +1,6 @@
 import 'reflect-metadata';
 import { ObjectType, Field } from '@nestjs/graphql';
 import { BaseModel } from 'src/common/models/base.model';
-import { Column } from '../column/column.model';
 import { Subtask } from '../subtask/subtask.model';
 
 @ObjectType()
@@ -15,6 +14,6 @@ export class Task extends BaseModel {
    @Field(() => String, { defaultValue: 'NOT STARTED' })
    status?: string;
 
-   @Field(() => [Subtask], { nullable: false })
-   subtasks: Array<Subtask>;
+   @Field(() => [Subtask], { nullable: false, defaultValue: [] })
+   subtasks?: Array<Subtask>;
 }

@@ -1,9 +1,11 @@
 import { PrismaService } from 'nestjs-prisma';
-import { Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { PrismaSelectService } from 'src/prisma-select.service';
 import { GraphQLResolveInfo } from 'graphql';
 import { SubtaskWhereUniqueInput } from './dto/subtask-where-unique.input';
 import { FindManyArgs } from 'src/common/input/find-many.input';
+import { CreateSubtaskInput } from '../board/dto/create-subtask.input';
+import { Prisma, Subtask } from '@prisma/client';
 
 @Injectable()
 export class SubtaskService {
@@ -30,5 +32,54 @@ export class SubtaskService {
          ...args,
          ...select,
       });
+   }
+
+   public async createSubtask(taskInput: CreateSubtaskInput) {
+      try {
+         const data: Prisma.SubtaskCreateInput = {
+            ...taskInput,
+         };
+
+         return await this.prisma.subtask.create({
+            data,
+         });
+      } catch (error) {
+         if (error.status) {
+            throw error;
+         }
+         throw new HttpException(
+            error.message,
+            HttpStatus.INTERNAL_SERVER_ERROR,
+         );
+      }
+   }
+
+   public async createSubtasks(subtasks: CreateSubtaskInput[] = []) {
+      const result: Subtask[] = [];
+      try {
+         for (const subtask of subtasks) {
+            const newSubtask = await this.createSubtask(subtask);
+            result.push(newSubtask);
+         }
+         return result;
+      } catch (error) {
+         throw new HttpException(
+            error.message,
+            HttpStatus.INTERNAL_SERVER_ERROR,
+         );
+      }
+   }
+
+   public async deleteSubtask(
+      where: SubtaskWhereUniqueInput,
+   ): Promise<Subtask> {
+      try {
+         return await this.prisma.subtask.delete({ where });
+      } catch (error) {
+         throw new HttpException(
+            error.message,
+            HttpStatus.INTERNAL_SERVER_ERROR,
+         );
+      }
    }
 }

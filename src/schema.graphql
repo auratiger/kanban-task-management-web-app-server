@@ -55,6 +55,16 @@ input CreateColumnInput {
   name: String!
 }
 
+input CreateSubtaskInput {
+  title: String!
+}
+
+input CreateTaskInput {
+  description: String
+  status: String = "NOT STARTED"
+  title: String!
+}
+
 """
 A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
 """
@@ -75,6 +85,14 @@ type Mutation {
   createBoard(data: CreateBoardInput!): Board!
   createColumn(data: CreateColumnInput!): Column!
   createColumns(data: [CreateColumnInput!]!): [Column!]!
+  createSubtask(data: CreateSubtaskInput!): Subtask!
+  createSubtasks(data: [CreateSubtaskInput!]!): [Subtask!]!
+  createTask(data: CreateTaskInput!): Task!
+  createTasks(data: [CreateTaskInput!]!): [Task!]!
+  deleteBoard(where: BoardWhereUniqueInput!): Board!
+  deleteColumn(where: ColumnWhereUniqueInput!): Column!
+  deleteSubtask(where: SubtaskWhereUniqueInput!): Subtask!
+  deleteTask(where: TaskWhereUniqueInput!): Task!
 }
 
 type Query {
